@@ -1,28 +1,12 @@
 package net.devmobility.lolloader;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import com.googlecode.flickrjandroid.Flickr;
-import com.googlecode.flickrjandroid.FlickrException;
-import com.googlecode.flickrjandroid.REST;
-import com.googlecode.flickrjandroid.photos.Photo;
-import com.googlecode.flickrjandroid.photos.PhotosInterface;
-import com.googlecode.flickrjandroid.photos.SearchParameters;
-
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 public class MainActivityFragment extends Fragment implements View.OnClickListener {
 
@@ -47,28 +31,6 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.imagebutton:
                 Toast.makeText(getActivity(), "Meow!", Toast.LENGTH_SHORT).show();
-                Flickr flickr = null;
-                try {
-                    flickr = new Flickr(key, secret, new REST());
-                } catch (ParserConfigurationException e) {
-                    e.printStackTrace();
-                }
-
-                SearchParameters searchParameters = new SearchParameters();
-                searchParameters.setTags(new String[]{"lolcat"});
-
-                List<Photo> list = null;
-                try {
-                    list = flickr.getPhotosInterface().search(searchParameters, 100, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (FlickrException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Log.e("REMOVE", "list = " + list);
 
                 // TODO: refresh image here
                 break;
