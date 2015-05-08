@@ -10,6 +10,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 
 import net.devmobility.lolloader.utils.Constants;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,12 +21,14 @@ public class LolCatRandomRequest extends Request<JSONObject> {
     String url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&" +
             "api_key=ee2b515275ae5273017da4a6a069f925&tags=lolcat&per_page=5&page=1&format=json&nojsoncallback=1";
 
-    private Response.Listener<String> listener;
+    private Response.Listener<Photo> listener;
 
-    public LolCatRandomRequest(String url,
-                              Response.Listener<String> reponseListener,
+    public LolCatRandomRequest(String searchTerm, int seed,
+                              Response.Listener<Photo> reponseListener,
                               Response.ErrorListener errorListener) {
-        super(Request.Method.GET, url, errorListener);
+        super(Request.Method.GET,
+                SearchRequestBuilder.builder().searchTag(searchTerm).perPage(1).page(seed).build().toString(),
+                errorListener);
         this.listener = reponseListener;
     }
 
@@ -44,9 +47,11 @@ public class LolCatRandomRequest extends Request<JSONObject> {
     @Override
     protected void deliverResponse(JSONObject response) {
         try {
-            Log.i("VOLLEY", "response = " + response);
             JSONObject j = response != null ? response.getJSONObject("photos") : null;
-            listener.onResponse(j.getString(Constants.TOTAL));
+            JSONArray data = j.getJSONArray("photo");
+            JSONObject photo = data.getJSONObject(0);
+            Photo p = new Photo(photo.getString("farm"), photo.getString("server"), photo.getString("id"), photo.getString("secret"));
+            listener.onResponse(p);
         } catch (JSONException e) {
             e.printStackTrace();
         }

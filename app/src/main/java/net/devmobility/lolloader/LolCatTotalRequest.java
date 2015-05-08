@@ -23,7 +23,7 @@ public class LolCatTotalRequest extends Request<JSONObject> {
                               Response.Listener<String> reponseListener,
                               Response.ErrorListener errorListener) {
         super(Request.Method.GET,
-                LolCatTotalRequestBuilder.builder().searchTag(searchTerm).perPage(10).page(1).build().toString(),
+                SearchRequestBuilder.builder().searchTag(searchTerm).perPage(10).page(1).build().toString(),
                 errorListener);
         this.listener = reponseListener;
     }

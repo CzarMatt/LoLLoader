@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -17,12 +18,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 public class MainActivityFragment extends Fragment implements View.OnClickListener,
-        Response.ErrorListener {
+        Response.ErrorListener, Response.Listener<String> {
 
     private final String searchTerm = "lolcat";
 
-    // farm id, server id, id, secret
-    private static final String BASE_PHOTO_URL = "https://farm%s.staticflickr.com/7784/17394172705_c18ffe913d.jpg";
+
 
     private static int TOTAL = 0;
 
@@ -52,7 +52,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
             @Override
             public void onResponse(String response) {
                 TOTAL = Integer.parseInt(response);
-                Log.i("VOLLEY", "response TOTAL = " + TOTAL);
+                Log.d("VOLLEY", "response TOTAL = " + TOTAL);
                 progressDialog.dismiss();
             }
         };
@@ -65,6 +65,23 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.imagebutton:
                 Toast.makeText(getActivity(), "Meow!", Toast.LENGTH_SHORT).show();
+                progressDialog = ProgressDialog.show(getActivity(), "( ͡° ͜ʖ ͡°)", "Herding cats...", true);
+
+                RequestQueue queue = Volley.newRequestQueue(getActivity());
+                Response.Listener<Photo> listener = new Response.Listener<Photo>() {
+                    @Override
+                    public void onResponse(Photo p) {
+                        // retrieve photo data here
+                        Log.d("onClick", "Retrived photo!  :  " + p.getId());
+
+                    }
+                };
+
+                // Generate a random number representing a single result from
+                // the previously gathered total number of json objects and
+                //make a request for photo data.
+                queue.add(new LolCatRandomRequest(searchTerm, TOTAL, listener, this));
+
 
                 // Instantiate the RequestQueue.
                 // NO JSONCALLBACK!!#%$@#$!#~
@@ -80,6 +97,10 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
                 // TODO: refresh image here
                 break;
         }
+    }
+
+    private int generateRandom(int min, int max) {
+        return (int)(Math.random() * ((max - min) + 1)) + min;
     }
 
     private String buildPhotoUri(String farmId, String serverId, String id, String secret) {
@@ -98,4 +119,8 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         progressDialog.dismiss();
     }
 
+    @Override
+    public void onResponse(String response) {
+        // This is for catching pictures!
+    }
 }

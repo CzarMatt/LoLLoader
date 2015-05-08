@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import net.devmobility.lolloader.utils.Constants;
 
-public class LolCatTotalRequestBuilder {
+public class SearchRequestBuilder {
 
     private final String searchTag;
     private final int perPage;
@@ -14,7 +14,7 @@ public class LolCatTotalRequestBuilder {
         return new Builder();
     }
 
-    private LolCatTotalRequestBuilder(Builder builder) {
+    private SearchRequestBuilder(Builder builder) {
         this.searchTag = builder.searchTag;
         this.perPage = builder.perPage;
         this.page = builder.page;
@@ -40,8 +40,8 @@ public class LolCatTotalRequestBuilder {
             return this;
         }
 
-        public LolCatTotalRequestBuilder build() {
-            return new LolCatTotalRequestBuilder(this);
+        public SearchRequestBuilder build() {
+            return new SearchRequestBuilder(this);
         }
     }
 
@@ -83,7 +83,7 @@ public class LolCatTotalRequestBuilder {
     }
 
     protected interface Build {
-        LolCatTotalRequestBuilder build();
+        SearchRequestBuilder build();
     }
 
 
