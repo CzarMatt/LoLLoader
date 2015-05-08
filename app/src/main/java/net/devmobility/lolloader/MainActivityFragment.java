@@ -49,8 +49,8 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressDialog = new ProgressDialog(getActivity());
         if (TOTAL == -1) {
-            progressDialog = new ProgressDialog(getActivity());
             progressDialog.setMessage("Initializing");
             progressDialog.show();
             initialize();

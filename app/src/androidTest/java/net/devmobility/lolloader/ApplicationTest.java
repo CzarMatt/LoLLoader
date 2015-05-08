@@ -44,10 +44,6 @@ public class ApplicationTest extends ActivityInstrumentationTestCase2<MainActivi
             }
         });
 
-//        Intent triggeredIntent = getStartedActivityIntent();
-//        assertNotNull("Intent should have triggered after button press", triggeredIntent);
-//        String data = triggeredIntent.getExtras().getString("result");
-//        assertEquals("Incorrect result data passed via the intent", "Testing Text", data);
 
     }
 
