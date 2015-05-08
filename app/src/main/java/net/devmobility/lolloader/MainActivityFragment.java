@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -20,14 +19,12 @@ import com.android.volley.toolbox.Volley;
 public class MainActivityFragment extends Fragment implements View.OnClickListener,
         Response.ErrorListener {
 
-
-    private static final String key = "ee2b515275ae5273017da4a6a069f925";
-    private static final String secret = "b6cb6abce3e927c4";
+    private final String searchTerm = "lolcat";
 
     // farm id, server id, id, secret
     private static final String BASE_PHOTO_URL = "https://farm%s.staticflickr.com/7784/17394172705_c18ffe913d.jpg";
 
-    private static int TOTAL= 0;
+    private static int TOTAL = 0;
 
     private ProgressDialog progressDialog;
 
@@ -51,7 +48,6 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
 
     private void initialize() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -60,7 +56,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
                 progressDialog.dismiss();
             }
         };
-        LolCatTotalRequest r = new LolCatTotalRequest(Request.Method.GET, listener, this);
+        LolCatTotalRequest r = new LolCatTotalRequest(searchTerm, listener, this);
         queue.add(r);
     }
 

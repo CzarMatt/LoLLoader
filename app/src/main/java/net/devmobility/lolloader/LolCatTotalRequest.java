@@ -19,10 +19,12 @@ public class LolCatTotalRequest extends Request<JSONObject> {
 
     private Response.Listener<String> listener;
 
-    public LolCatTotalRequest(int methodType,
+    public LolCatTotalRequest(String searchTerm,
                               Response.Listener<String> reponseListener,
                               Response.ErrorListener errorListener) {
-        super(methodType, Constants.FLICKR_BASE_URL, errorListener);
+        super(Request.Method.GET,
+                LolCatTotalRequestBuilder.builder().searchTag(searchTerm).perPage(10).page(1).build().toString(),
+                errorListener);
         this.listener = reponseListener;
     }
 

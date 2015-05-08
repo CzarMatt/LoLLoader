@@ -22,10 +22,10 @@ public class LolCatRandomRequest extends Request<JSONObject> {
 
     private Response.Listener<String> listener;
 
-    public LolCatRandomRequest(int methodType, String url,
+    public LolCatRandomRequest(String url,
                               Response.Listener<String> reponseListener,
                               Response.ErrorListener errorListener) {
-        super(methodType, url, errorListener);
+        super(Request.Method.GET, url, errorListener);
         this.listener = reponseListener;
     }
 

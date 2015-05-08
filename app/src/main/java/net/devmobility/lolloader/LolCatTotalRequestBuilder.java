@@ -1,5 +1,9 @@
 package net.devmobility.lolloader;
 
+import android.net.Uri;
+
+import net.devmobility.lolloader.utils.Constants;
+
 public class LolCatTotalRequestBuilder {
 
     private final String searchTag;
@@ -10,7 +14,6 @@ public class LolCatTotalRequestBuilder {
         return new Builder();
     }
 
-    // mandatory creation
     private LolCatTotalRequestBuilder(Builder builder) {
         this.searchTag = builder.searchTag;
         this.perPage = builder.perPage;
@@ -42,33 +45,44 @@ public class LolCatTotalRequestBuilder {
         }
     }
 
-
+    /**
+     * Construct the Flickr search URL
+     * @return
+     */
     @Override
     public String toString() {
-        //            private String buildPhotoUri (String farmId, String serverId, String id, String secret){
-//                Uri.Builder builder = new Uri.Builder();
-//                builder.scheme("https")
-//                        .authority(String.format("farm%s.staticflickr.com", farmId))
-//                        .appendPath(serverId)
-//                        .appendPath(String.format("%s_%s", id, secret));
-//                return builder.build().toString();
-//            }
-        return "URL";
+        return buildPhotoUri();
     }
 
-    interface SearchTag {
+    private String buildPhotoUri() {
+        Uri.Builder uriBuilder = new Uri.Builder();
+        uriBuilder.scheme(Constants.FLICKR_SCHEME)
+                .authority(Constants.FLICKR_BASE_URL)
+                .appendPath(Constants.FLICKR_SERVICES_PATH)
+                .appendPath(Constants.FLICKR_API_TYPE_PATH)
+                .appendQueryParameter(Constants.METHOD, Constants.METHOD_SEARCH)
+                .appendQueryParameter(Constants.API_KEY, Constants.MY_API_KEY)
+                .appendQueryParameter(Constants.TAGS, searchTag)
+                .appendQueryParameter(Constants.PER_PAGE, String.valueOf(perPage))
+                .appendQueryParameter(Constants.PAGE, String.valueOf(page))
+                .appendQueryParameter(Constants.FORMAT, Constants.FORMAT_TYPE)
+                .appendQueryParameter(Constants.NO_JSON_CALLBACK, Constants.NO_JSON_CALLBACK_VALUE);
+        return uriBuilder.build().toString();
+    }
+
+    protected interface SearchTag {
         PerPage searchTag(String url);
     }
 
-    interface PerPage {
+    protected interface PerPage {
         Page perPage(int perPage);
     }
 
-    interface Page {
+    protected interface Page {
         Build page(int page);
     }
 
-    interface Build {
+    protected interface Build {
         LolCatTotalRequestBuilder build();
     }
 
