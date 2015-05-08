@@ -11,13 +11,14 @@
     tools:context=".MainActivityFragment">
 
     <ImageButton
-        android:src="@drawable/gya"
         android:id="@+id/imagebutton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight=".7"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/imageview_cat"
-        android:scaleType="centerInside" />
+        android:scaleType="centerInside"
+        android:src="@drawable/temp" />
 
     <TextView
         android:id="@+id/textview"
@@ -25,6 +26,6 @@
         android:layout_height="match_parent"
         android:layout_weight=".3"
         android:gravity="center"
-        android:text="TEXT"
+        android:text="@string/start"
         android:textSize="24sp" />
 </LinearLayout>

@@ -23,7 +23,7 @@ public class LolCatTotalRequest extends Request<JSONObject> {
                               Response.Listener<String> reponseListener,
                               Response.ErrorListener errorListener) {
         super(Request.Method.GET,
-                SearchRequestBuilder.builder().searchTag(searchTerm).perPage(10).page(1).build().toString(),
+                SearchRequestBuilder.builder().searchTag(searchTerm).page(1).build().toString(),
                 errorListener);
         this.listener = reponseListener;
     }
@@ -43,7 +43,7 @@ public class LolCatTotalRequest extends Request<JSONObject> {
     @Override
     protected void deliverResponse(JSONObject response) {
         try {
-            Log.i("VOLLEY", "response = " + response);
+            Log.d("VOLLEY", "response = " + response);
             JSONObject j = response != null ? response.getJSONObject("photos") : null;
             listener.onResponse(j.getString(Constants.TOTAL));
         } catch (JSONException e) {

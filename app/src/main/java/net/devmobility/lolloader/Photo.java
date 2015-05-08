@@ -10,12 +10,22 @@ public class Photo {
         this.farmId = farmId;
         this.serverId = serverId;
         this.secret = secret;
+        this.title = title;
     }
 
     private String serverId;
     private String id;
     private String secret;
     private String farmId;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getFarmId() {
         return farmId;

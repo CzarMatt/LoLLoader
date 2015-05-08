@@ -9,13 +9,14 @@
     tools:context=".MainActivityFragment">
 
     <ImageButton
-        android:src="@drawable/gya"
         android:id="@+id/imagebutton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/textview"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/imageview_cat"
-        android:scaleType="centerInside" />
+        android:scaleType="centerInside"
+        android:src="@drawable/temp" />
 
     <TextView
         android:id="@+id/textview"
@@ -23,6 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="TEXT"
+        android:text="@string/start"
         android:textSize="24sp" />
 </RelativeLayout>

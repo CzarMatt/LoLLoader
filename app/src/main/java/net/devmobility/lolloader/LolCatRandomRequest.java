@@ -23,11 +23,11 @@ public class LolCatRandomRequest extends Request<JSONObject> {
 
     private Response.Listener<Photo> listener;
 
-    public LolCatRandomRequest(String searchTerm, int seed,
+    public LolCatRandomRequest(String searchTerm, int page,
                               Response.Listener<Photo> reponseListener,
                               Response.ErrorListener errorListener) {
         super(Request.Method.GET,
-                SearchRequestBuilder.builder().searchTag(searchTerm).perPage(1).page(seed).build().toString(),
+                SearchRequestBuilder.builder().searchTag(searchTerm).page(page).build().toString(),
                 errorListener);
         this.listener = reponseListener;
     }
@@ -47,15 +47,23 @@ public class LolCatRandomRequest extends Request<JSONObject> {
     @Override
     protected void deliverResponse(JSONObject response) {
         try {
+            Log.d("VOLLEY", "response = " + response);
             JSONObject j = response != null ? response.getJSONObject("photos") : null;
-            JSONArray data = j.getJSONArray("photo");
-            JSONObject photo = data.getJSONObject(0);
+            JSONArray data = j != null ? j.getJSONArray("photo") : null;
+            JSONObject photo = data != null ? data.getJSONObject(generateRandom(1, 100)) : null;
+            assert photo != null;
             Photo p = new Photo(photo.getString("farm"), photo.getString("server"), photo.getString("id"), photo.getString("secret"));
+            p.setTitle(photo.getString("title"));
             listener.onResponse(p);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    private int generateRandom(int min, int max) {
+        return (int)(Math.random() * ((max - min) + 1)) + min;
+    }
+
 
 }
 
