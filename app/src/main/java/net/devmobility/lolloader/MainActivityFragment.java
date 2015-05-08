@@ -24,7 +24,6 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     private static int TOTAL = -1;
 
     private ProgressDialog progressDialog;
-    private Bundle bundle;
     private ImageButton catButton;
     private TextView catText;
 
