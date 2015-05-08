@@ -1,7 +1,6 @@
 package net.devmobility.lolloader;
 
 import android.net.Uri;
-import android.util.Log;
 
 import net.devmobility.lolloader.utils.Constants;
 
@@ -40,7 +39,6 @@ public class SearchRequestBuilder {
 
     /**
      * Construct the Flickr search URL
-     * @return
      */
     @Override
     public String toString() {
@@ -59,9 +57,7 @@ public class SearchRequestBuilder {
                 .appendQueryParameter(Constants.PAGE, String.valueOf(page))
                 .appendQueryParameter(Constants.FORMAT, Constants.FORMAT_TYPE)
                 .appendQueryParameter(Constants.NO_JSON_CALLBACK, Constants.NO_JSON_CALLBACK_VALUE);
-        String url = uriBuilder.build().toString();
-        Log.d("REMOVE", "url = " + url);
-        return url;
+        return uriBuilder.build().toString();
     }
 
     protected interface SearchTag {
@@ -75,6 +71,5 @@ public class SearchRequestBuilder {
     protected interface Build {
         SearchRequestBuilder build();
     }
-
 
 }

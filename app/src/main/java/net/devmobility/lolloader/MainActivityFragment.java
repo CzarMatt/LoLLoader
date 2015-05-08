@@ -3,8 +3,8 @@ package net.devmobility.lolloader;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +21,10 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
 
     private final String searchTerm = "lolcat";
 
-    private static int TOTAL = 0;
+    private static int TOTAL = -1;
 
     private ProgressDialog progressDialog;
+    private Bundle bundle;
     private ImageButton catButton;
     private TextView catText;
 
@@ -32,22 +33,32 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         catButton = (ImageButton) view.findViewById(R.id.imagebutton);
-        catButton.setOnClickListener(this);
         catText = (TextView) view.findViewById(R.id.textview);
-        Log.d("REMOVE", "oncreateview");
+        if (savedInstanceState != null) {
+            catButton.setImageBitmap((Bitmap) savedInstanceState.get("image"));
+            catText.setText((String) savedInstanceState.get("text"));
+        }
+        catButton.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("REMOVE", "onViewCreated");
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Initializing");
         progressDialog.show();
-        initialize();
+        if (TOTAL < 0) initialize();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("image", ((BitmapDrawable)catButton.getDrawable()).getBitmap());
+        outState.putString("text", catText.getText().toString());
+        super.onSaveInstanceState(outState);
     }
 
     private void initialize() {
@@ -97,7 +108,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     }
 
     private int generateRandom(int min, int max) {
-        return (int)(Math.random() * ((max - min) + 1)) + min;
+        return (int) (Math.random() * ((max - min) + 1)) + min;
     }
 
     @Override
