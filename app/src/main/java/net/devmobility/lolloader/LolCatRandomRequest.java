@@ -19,7 +19,7 @@ public class LolCatRandomRequest extends Request<JSONObject> {
     private final String title = "title";
     private final String farm = "farm";
     private final String server = "server";
-    private final String id = "is";
+    private final String id = "id";
     private final String secret = "secret";
 
     private Response.Listener<Photo> listener;

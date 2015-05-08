@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +36,14 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         catButton = (ImageButton) view.findViewById(R.id.imagebutton);
         catButton.setOnClickListener(this);
         catText = (TextView) view.findViewById(R.id.textview);
+        Log.d("REMOVE", "oncreateview");
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("REMOVE", "onViewCreated");
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Initializing");
         progressDialog.show();
