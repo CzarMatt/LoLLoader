@@ -40,6 +40,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         if (savedInstanceState != null) {
             catButton.setImageBitmap((Bitmap) savedInstanceState.get("image"));
             catText.setText((String) savedInstanceState.get("text"));
+            TOTAL = (int) savedInstanceState.get("total");
         }
         catButton.setOnClickListener(this);
         return view;
@@ -48,16 +49,19 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Initializing");
-        progressDialog.show();
-        if (TOTAL < 0) initialize();
+        if (TOTAL == -1) {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Initializing");
+            progressDialog.show();
+            initialize();
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("image", ((BitmapDrawable)catButton.getDrawable()).getBitmap());
+        outState.putParcelable("image", ((BitmapDrawable) catButton.getDrawable()).getBitmap());
         outState.putString("text", catText.getText().toString());
+        outState.putInt("total", TOTAL);
         super.onSaveInstanceState(outState);
     }
 
