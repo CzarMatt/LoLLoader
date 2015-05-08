@@ -1,7 +1,5 @@
 package net.devmobility.lolloader;
 
-import android.util.Log;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -43,9 +41,8 @@ public class LolCatTotalRequest extends Request<JSONObject> {
     @Override
     protected void deliverResponse(JSONObject response) {
         try {
-            Log.d("VOLLEY", "response = " + response);
-            JSONObject j = response != null ? response.getJSONObject("photos") : null;
-            listener.onResponse(j.getString(Constants.TOTAL));
+            JSONObject j = response != null ? response.getJSONObject(Constants.PHOTOS) : null;
+            listener.onResponse(j != null ? j.getString(Constants.TOTAL) : null);
         } catch (JSONException e) {
             e.printStackTrace();
         }

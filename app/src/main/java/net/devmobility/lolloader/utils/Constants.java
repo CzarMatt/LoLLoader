@@ -71,7 +71,10 @@ public class Constants {
      */
     // total images given for a specified tag
     public static final String TOTAL = "total";
-
+    // JSONArray node name
+    public static final String PHOTOS = "photos";
+    // JSONObject name
+    public static final String PHOTO = "photo";
 
 
 }

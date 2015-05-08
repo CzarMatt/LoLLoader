@@ -2,15 +2,11 @@ package net.devmobility.lolloader;
 
 public class Photo {
 
-    // farm id, server id, id, secret
-    private static final String BASE_PHOTO_URL = "https://farm%s.staticflickr.com/7784/17394172705_c18ffe913d.jpg";
-
     public Photo(String farmId, String serverId, String id, String secret) {
         this.id = id;
         this.farmId = farmId;
         this.serverId = serverId;
         this.secret = secret;
-        this.title = title;
     }
 
     private String serverId;
@@ -31,16 +27,8 @@ public class Photo {
         return farmId;
     }
 
-    public void setFarmId(String farmId) {
-        this.farmId = farmId;
-    }
-
     public String getServerId() {
         return serverId;
-    }
-
-    public void setServerId(String serverId) {
-        this.serverId = serverId;
     }
 
     public String getId() {
@@ -53,10 +41,6 @@ public class Photo {
 
     public String getSecret() {
         return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
     }
 
 }

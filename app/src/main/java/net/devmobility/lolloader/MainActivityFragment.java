@@ -3,9 +3,7 @@ package net.devmobility.lolloader;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +53,6 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
             @Override
             public void onResponse(String response) {
                 TOTAL = Integer.parseInt(response);
-                Log.d("VOLLEY", "response TOTAL = " + TOTAL);
                 progressDialog.dismiss();
             }
         };
@@ -77,8 +74,6 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
                 Response.Listener<Photo> listener = new Response.Listener<Photo>() {
                     @Override
                     public void onResponse(Photo p) {
-                        // retrieve photo data here
-                        Log.d("onClick", "Retrived photo!  :  " + p.getId());
                         new Downloader(getActivity(), progressDialog, MainActivityFragment.this).execute(
                                 String.format("https://farm%s.staticflickr.com/%s/%s_%s.jpg",
                                         p.getFarmId(),
@@ -89,12 +84,10 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
                     }
                 };
 
-                int page = generateRandom(1, TOTAL);
-                Log.d("onClick", "randomNum: " + page);
                 // Generate a random number representing a single result from
                 // the previously gathered total number of json objects and
                 //make a request for photo data.
-                queue.add(new LolCatRandomRequest(searchTerm, page, listener, this));
+                queue.add(new LolCatRandomRequest(searchTerm, generateRandom(1, TOTAL), listener, this));
 
                 break;
         }
@@ -106,7 +99,6 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.i("VOLLEY", "That didn't work!", error);
         progressDialog.dismiss();
     }
 
